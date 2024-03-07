@@ -1,16 +1,38 @@
+import axios from "axios";
 import React, { useRef } from "react";
 import { Button, Card, Form } from "react-bootstrap";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
+    const userDetail = {
+      email,
+      password,
+    };
+    if (confirmPassword === password) {
+      try {
+        const resp = await axios.post(
+          "http://localhost:5000/user/signup",
+          userDetail
+        );
+        if (resp) {
+          alert(resp.data.msg);
+          navigate("/login");
+        } else {
+          alert("something went wrong");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
     // Add your signup logic here
     console.log("Signup form submitted");

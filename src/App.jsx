@@ -5,9 +5,11 @@ import SignupPage from "./components/UI/SignupPage";
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import LoginPage from "./components/UI/LoginPage";
 import HomePage from "./components/UI/HomePage";
-import SendMail from "./components/Mail/SendMail";
-import Sidebar from "./components/Mail/Sidebar";
-import Inbox from "./components/Mail/Inbox";
+
+import SendMailPage from "./components/Page/SendMailPage";
+import InboxPage from "./components/Page/InboxPage";
+import ReadMailPage from "./components/Page/ReadMailPage";
+import SentMailPage from "./components/Page/SentMailPage";
 
 function App() {
   return (
@@ -16,8 +18,10 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/sendmail" element={<SendMail />} />
-        <Route path="/inbox" element={<Inbox />} />
+        <Route path="/sendmail" element={<SendMailPage />} />
+        <Route path="/inbox" element={<InboxPage />} />
+        <Route path="/singlemail/:id" element={<ReadMailPage />} />
+        <Route path="/sentMailPage" element={<SentMailPage />} />
       </Routes>
     </BrowserRouter>
   );

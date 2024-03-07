@@ -1,9 +1,12 @@
+import axios from "axios";
 import React, { useRef } from "react";
 import { Button, Card, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
@@ -12,7 +15,18 @@ const LoginPage = () => {
     console.log("Signup form submitted");
     console.log("Email:", email);
     console.log("Password:", password);
-
+    const user_detail = { email, password };
+    const resp = await axios.post(
+      "http://localhost:5000/user/login",
+      user_detail
+    );
+    if (resp) {
+      console.log(resp.data);
+      localStorage.setItem("token", resp.data.token);
+      localStorage.setItem("isLogged", true);
+      alert("login succesful");
+      navigate("/inbox");
+    }
     // Reset form fields
     emailRef.current.value = "";
     passwordRef.current.value = "";

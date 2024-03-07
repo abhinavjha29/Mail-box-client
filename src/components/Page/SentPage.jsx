@@ -1,8 +1,8 @@
 import React from "react";
 import Inbox from "../Mail/Inbox";
 
-const InboxPage = () => {
+const SentPage = () => {
   return <Inbox />;
 };
 
-export default InboxPage;
+export default SentPage;

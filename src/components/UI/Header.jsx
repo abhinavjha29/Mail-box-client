@@ -1,42 +1,48 @@
-import React from "react";
+import React, { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { MailContext } from "../store/MailContextProvider";
 
 const Header = () => {
+  const { getSentMail } = useContext(MailContext);
+  const navigate = useNavigate();
+  const handleSentButton = async (e) => {
+    e.preventDefault();
+    await getSentMail();
+    navigate("/sentMailPage");
+  };
   return (
     <header class="p-3 text">
       <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a
-            href="/"
-            class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
-          >
-            <svg
-              class="bi me-2"
-              width="40"
-              height="32"
-              role="img"
-              aria-label="Bootstrap"
-            >
-              <use xlink:href="#bootstrap"></use>
-            </svg>
-          </a>
-
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li>
-              <a href="#" class="nav-link px-2 text-dark">
-                Inbox
-              </a>
+            <li className="me-4">
+              <NavLink to={"/inbox"}>
+                <button
+                  type="button"
+                  class="btn btn-primary position-relative "
+                >
+                  Inbox
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    99+
+                    <span class="visually-hidden">unread messages</span>
+                  </span>
+                </button>
+              </NavLink>
             </li>
-            <li>
-              <a href="#" class="nav-link px-2 text-dark">
+            <li className="me-4">
+              <button
+                onClick={(e) => handleSentButton(e)}
+                className="nav-link px-2 text-dark"
+              >
                 Sent
-              </a>
+              </button>
             </li>
-            <li>
+            <li className="me-4">
               <a href="#" class="nav-link px-2 text-dark">
                 Deleted
               </a>
             </li>
-            <li>
+            <li className="me-4">
               <a href="#" class="nav-link px-2 text-dark">
                 About
               </a>
@@ -53,9 +59,11 @@ const Header = () => {
           </form>
 
           <div class="text-end">
-            <button type="button" class="btn btn-outline-light me-2">
-              Compose Mail
-            </button>
+            <NavLink to={"/sendmail"}>
+              <button type="button" class="btn btn-outline-light me-2">
+                Compose Mail
+              </button>
+            </NavLink>
           </div>
         </div>
       </div>
